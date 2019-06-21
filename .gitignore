@@ -1,0 +1,10 @@
+*.log
+*.idea
+*.class
+.idea
+.project
+.jar
+.war
+.zip
+*.iml
+/target
