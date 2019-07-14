@@ -1,0 +1,18 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: auth
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://10.211.55.3:3306/khan?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      username: root
+      password: 123456
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8086/eureka/
+
