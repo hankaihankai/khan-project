@@ -25,6 +25,7 @@
         <module>zuul</module>
         <module>commen</module>
         <module>service</module>
+        <module>auth</module>
     </modules>
     <repositories>
         <repository>

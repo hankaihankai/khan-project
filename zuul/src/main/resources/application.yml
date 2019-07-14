@@ -2,49 +2,21 @@ server:
   port: 8088
 
 spring:
-  jackson:
-    date-format: yyyy-MM-dd
   application:
     name: zuul
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/huolala?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://10.211.55.3:3306/khan?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
       username: root
       password: 123456
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8086/eureka/
-
-
 zuul:
   routes:
-    web:
-      path: /web/**
-      serviceId: web
-#mybatis
-mybatis-plus:
-  mapper-locations: classpath:mapper/*.xml
-  #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.khan.zuul.entity
-  global-config:
-    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-    field-strategy: 2
-    #驼峰下划线转换
-    db-column-underline: true
-    #刷新mapper 调试神器
-    refresh-mapper: true
-    #数据库大写下划线转换
-    #capital-mode: true
-    #序列接口实现类配置
-    #key-generator: com.baomidou.springboot.xxx
-    #逻辑删除配置
-    logic-delete-value: -1
-    logic-not-delete-value: 0
-    #主键类型  auto:"数据库ID自增",input:"用户输入ID", id-worker:"全局唯一ID (数字类型唯一ID)", id-worker-str:"字符串格式的全局唯一ID" uuid:"全局唯一ID UUID";
-    db-config:
-      id-type: auto
-    #自定义填充策略接口实现
-    #meta-object-handler: com.baomidou.springboot.xxx
+    api: /api/**
+    auth: /auth/**
+
