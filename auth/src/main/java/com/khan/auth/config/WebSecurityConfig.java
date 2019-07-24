@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .permitAll()
                 .and()
-                .httpBasic()
+                 .httpBasic()
         ;
     }
 
