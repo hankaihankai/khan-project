@@ -30,7 +30,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").authenticated()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/oauth/**", "/login/**").permitAll()
                 .and()
                 .formLogin().permitAll()

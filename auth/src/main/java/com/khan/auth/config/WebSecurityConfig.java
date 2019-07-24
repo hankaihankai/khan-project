@@ -23,8 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public AuthenticationManager authenticationManager() throws Exception {
-        return  super.authenticationManager();
+        return super.authenticationManager();
     }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("hankai").password(passwordEncoder().encode("123456")).roles("user");
@@ -36,7 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login/**", "/oauth/**").permitAll()
                 .antMatchers("/**").authenticated()
                 .and()
-                 .formLogin()
+                .cors().disable()
+                .csrf().disable()
+                .formLogin()
                 .permitAll()
                 .and()
                 .httpBasic()

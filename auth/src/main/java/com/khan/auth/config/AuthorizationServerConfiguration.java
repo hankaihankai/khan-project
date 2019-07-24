@@ -48,14 +48,15 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         clients.inMemory()
                 .withClient("hankai").secret(passwordEncoder.encode("123456")).authorizedGrantTypes("password").scopes("user")
                 .and()
-                .withClient("hank").secret(passwordEncoder.encode("123456")).authorizedGrantTypes("authorization_code").scopes("user").redirectUris("http://www.baidu.com")
+                .withClient("hank").secret(passwordEncoder.encode("123456")).authorizedGrantTypes("authorization_code")
+                .redirectUris("http://www.baidu.com").scopes("user")
         ;
     }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.passwordEncoder(passwordEncoder);
-        super.configure(security);
+        security.passwordEncoder(passwordEncoder)
+        ;
     }
 
     @Override

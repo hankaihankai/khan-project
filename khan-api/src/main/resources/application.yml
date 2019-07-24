@@ -17,14 +17,3 @@ eureka:
 feign:
   hystrix:
     enabled: true
-security:
-  oauth2:
-    client:
-      client-id: hank
-      resource-ids: 123456
-      access-token-uri: http://localhost:8089/oauth/token
-      user-authorization-uri: http://localhost:8089/oauth/authorize
-      scope: user
-    resource:
-      token-info-uri: http://localhost:8089/oauth/check_token
-      service-id: 2
