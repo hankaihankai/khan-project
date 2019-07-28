@@ -1,61 +1,49 @@
 package com.khan.auth.service;
 
+import com.google.common.collect.Lists;
+import com.khan.auth.entity.Roles;
+import com.khan.auth.entity.vo.UsersVo;
+import com.khan.auth.mapper.UsersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.io.Serializable;
 import java.util.List;
-@Component
-public class UserServiceImpl implements UserDetailsService {
+import java.util.stream.Collectors;
+
+@Service
+public class UserServiceImpl implements UserDetailsService, Serializable {
+
+    @Autowired
+    private UsersMapper usersMapper;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public static void main(String[] args) {
+
+        System.out.println(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("123456"));
+    }
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return new UserDetails() {
-            @Override
-            public Collection<? extends GrantedAuthority> getAuthorities() {
-                List<GrantedAuthority> list = new ArrayList<>();
-                list.add((GrantedAuthority) () -> "user");
-                return list;
-            }
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UsersVo usersVo = usersMapper.selectByUsername(username);
+        if (usersVo == null) {
+            throw new RuntimeException("没有这个用户");
+        }
+        List<Roles> roles = usersVo.getRoles();
+        List<GrantedAuthority> grantedAuthorityList = Lists.newArrayList();
+        if (!CollectionUtils.isEmpty(roles)) {
+            grantedAuthorityList = roles.stream().map(role -> (GrantedAuthority) () -> role.getRoleKey()).collect(Collectors.toList());
+        }
 
-            @Override
-            public String getPassword() {
-                return passwordEncoder.encode("123456");
-            }
-
-            @Override
-            public String getUsername() {
-                return "hankai";
-            }
-
-            @Override
-            public boolean isAccountNonExpired() {
-                return true;
-            }
-
-            @Override
-            public boolean isAccountNonLocked() {
-                return true;
-            }
-
-            @Override
-            public boolean isCredentialsNonExpired() {
-                return true;
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return true;
-            }
-        };
+        return new User(usersVo.getUsername(), usersVo.getPassword(), grantedAuthorityList);
     }
 }

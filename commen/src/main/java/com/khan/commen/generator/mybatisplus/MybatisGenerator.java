@@ -19,7 +19,7 @@ public class MybatisGenerator {
 	 */
 	public static void main(String[] args) {
 		// 子项目名
-		String subProject = "/zuul";
+		String subProject = "/auth";
 		// 代码生成器
 		AutoGenerator mpg = new AutoGenerator();
 
@@ -34,7 +34,7 @@ public class MybatisGenerator {
 
 		// 数据源配置
 		DataSourceConfig dsc = new DataSourceConfig();
-		dsc.setUrl("jdbc:mysql://localhost:3306/huolala?useUnicode=true&useSSL=false&characterEncoding=utf8");
+		dsc.setUrl("jdbc:mysql://10.211.55.3:3306/khan?useUnicode=true&useSSL=false&characterEncoding=utf8");
 		// dsc.setSchemaName("public");
 		dsc.setDriverName("com.mysql.jdbc.Driver");
 		dsc.setUsername("root");
@@ -44,7 +44,7 @@ public class MybatisGenerator {
 		// 包配置
 		PackageConfig pc = new PackageConfig();
 		//pc.setModuleName("zuul");
-		pc.setParent("com.khan.zuul");
+		pc.setParent("com.khan.auth");
 		mpg.setPackageInfo(pc);
 
 		// 自定义配置
@@ -103,10 +103,10 @@ public class MybatisGenerator {
 		strategy.setEntityLombokModel(true);
 		strategy.setRestControllerStyle(true);
 		//strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
-		strategy.setInclude("test_user_role");
+		strategy.setInclude("users", "roles", "menus", "user_role", "role_menus");
 		//strategy.setSuperEntityColumns("id");
 		strategy.setControllerMappingHyphenStyle(true);
-		strategy.setTablePrefix("test_");
+		strategy.setTablePrefix("");
 		mpg.setStrategy(strategy);
 		mpg.setTemplateEngine(new FreemarkerTemplateEngine());
 		mpg.execute();

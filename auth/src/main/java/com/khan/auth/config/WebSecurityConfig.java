@@ -1,5 +1,7 @@
 package com.khan.auth.config;
 
+import com.khan.auth.service.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,17 +10,22 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
+    @Autowired
+    private UserServiceImpl userService;
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Bean
     @Override
@@ -28,12 +35,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("hankai").password(passwordEncoder().encode("123456")).roles("user");
+        //auth.inMemoryAuthentication().withUser("hankai").password(passwordEncoder.encode("123456")).roles("user");
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .cors().disable()
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/login/**", "/oauth/**").permitAll()
                 .antMatchers("/**").authenticated()
                 .and()
@@ -42,6 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .permitAll()
                 .and()
+                .cors().disable()
+                .csrf().disable()
                  .httpBasic()
         ;
     }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.khan.auth.mapper.UsersMapper">
+    <resultMap id="resultMap" type="com.khan.auth.entity.vo.UsersVo">
+        <result column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="enabled" property="enabled"/>
+        <collection property="roles" columnPrefix="r_" ofType="com.khan.auth.entity.Roles" javaType="ArrayList">
+            <result column="id" property="id"/>
+            <result column="rolename" property="rolename"/>
+            <result column="role_key" property="roleKey"/>
+        </collection>
+    </resultMap>
+    <select id="selectByUsername" resultMap="resultMap">
+        select
+        u.*,
+        r.id r_id, r.rolename r_rolename, r.role_key r_role_key
+        from users u
+         left join user_role u_r on u.id = u_r.user_id
+         left join roles r on u_r.role_id = r.id
+        where u.username = #{username,jdbcType=VARCHAR}
+    </select>
+</mapper>
