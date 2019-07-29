@@ -1,4 +1,4 @@
-package com.khan.auth.service;
+package com.khan.auth.service.oauth;
 
 import com.google.common.collect.Lists;
 import com.khan.auth.entity.Roles;

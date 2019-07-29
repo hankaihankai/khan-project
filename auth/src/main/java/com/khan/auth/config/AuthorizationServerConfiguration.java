@@ -1,6 +1,6 @@
 package com.khan.auth.config;
 
-import com.khan.auth.service.UserServiceImpl;
+import com.khan.auth.service.oauth.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

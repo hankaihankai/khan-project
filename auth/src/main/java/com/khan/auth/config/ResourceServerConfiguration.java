@@ -20,7 +20,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources
                 .tokenStore(tokenStore)
-                .resourceId("2")
         ;
     }
 
