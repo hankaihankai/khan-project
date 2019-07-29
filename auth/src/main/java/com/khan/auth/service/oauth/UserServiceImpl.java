@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserDetailsService, Serializable {
     private PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
-
         System.out.println(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("123456"));
     }
     @Override
