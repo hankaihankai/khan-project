@@ -17,4 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user-role")
 public class UserRoleController {
 
+    public static void main(String[] args) {
+
+    }
 }
