@@ -4,6 +4,7 @@ import com.khan.auth.entity.Users;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.khan.auth.entity.vo.UsersVo;
 import org.apache.ibatis.annotations.Mapper;import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -14,6 +15,7 @@ import org.apache.ibatis.annotations.Mapper;import org.apache.ibatis.annotations
  * @since 2019-07-28
  */
 @Mapper
+@Repository
 public interface UsersMapper extends BaseMapper<Users> {
 
     UsersVo selectByUsername(@Param("username") String username);
