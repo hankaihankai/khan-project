@@ -1,9 +1,9 @@
-package com.khan.auth.service.oauth;
+package com.khan.api.service.oauth;
 
 import com.google.common.collect.Lists;
-import com.khan.auth.entity.Roles;
-import com.khan.auth.entity.vo.UsersVo;
-import com.khan.auth.mapper.UsersMapper;
+import com.khan.api.entity.Roles;
+import com.khan.api.entity.vo.UsersVo;
+import com.khan.api.mapper.UsersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;

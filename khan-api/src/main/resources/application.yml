@@ -10,6 +10,28 @@ spring:
       url: jdbc:mysql://10.211.55.3:3306/khan?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
       username: root
       password: 123456
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.khan.api.entity
+  global-config:
+    db-config:
+      #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+      id-type: UUID
+      #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+      field-strategy: ignored
+      #驼峰下划线转换
+      table-underline: true
+      #逻辑删除
+    #是否控制台 print mybatis-plus 的 LOGO
+    banner: true
+  configuration:
+    #是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN（下划线命名） 到经典 Java 属性名 aColumn（驼峰命名） 的类似映射。
+    map-underscore-to-camel-case: true
+    #MyBatis 自动映射时未知列或未知属性处理策略，通过该配置可指定 MyBatis 在自动映射过程中遇到未知列或者未知属性时如何处理，总共有 3 种可选值：NONE：不做任何处理 (默认值) WARNING：以日志的形式打印相关警告信息 FAILING：当作映射失败处理，并抛出异常和详细信息
+    AutoMappingUnknownColumnBehavior: FAILING
+#      logic-delete-value: 1
+#      logicNotDeleteValue: 0
 eureka:
   client:
     serviceUrl:
@@ -17,3 +39,17 @@ eureka:
 feign:
   hystrix:
     enabled: true
+security:
+  oauth2:
+    client:
+      client-id: hankai
+      client-secret: 123456
+      access-token-uri: http://localhost:8089/oauth/token
+      user-authorization-uri: http://localhost:8089/oauth/authorize
+      scope: user
+      resource-ids: user1
+    #      grant-type: password
+    #      authorized-grant-types: password
+    resource:
+      token-info-uri: http://localhost:8089/oauth/check_token
+      id: user

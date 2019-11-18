@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
  * @since 2019-07-28
  */
 @Mapper
-@Repository
 public interface UsersMapper extends BaseMapper<Users> {
 
     UsersVo selectByUsername(@Param("username") String username);

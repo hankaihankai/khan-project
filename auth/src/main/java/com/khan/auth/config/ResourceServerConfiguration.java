@@ -9,8 +9,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
-@Configuration
-@EnableResourceServer
+/**
+ * 不当资源服务器 所以注释了
+ */
+//@Configuration
+//@EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     @Autowired
@@ -18,19 +21,22 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources
+        resources.resourceId("user")
                 .tokenStore(tokenStore)
         ;
+
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .requestMatchers().antMatchers( "/user/**")
                 .and()
                 .authorizeRequests()
+                .antMatchers("/product/**").hasAnyAuthority("us")
                 .antMatchers("/**").permitAll()
                 .antMatchers("/oauth/**", "/login/**").permitAll()
+                .antMatchers("/user/**").authenticated()
                 .and()
                 .formLogin().permitAll()
                 ;

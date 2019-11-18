@@ -15,23 +15,20 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8086/eureka/
-security:
-  oauth2:
-    client:
-      client-id: hankai
-      client-secret: 123456
-      access-token-uri: http://localhost:8089/oauth/token
-      user-authorization-uri: http://localhost:8089/oauth/authorize
-      scope: user
-      resource-ids: user
-#      grant-type: password
-#      authorized-grant-types: password
-    resource:
-      token-info-uri: http://localhost:8089/oauth/check_token
-      id: user
 
 zuul:
+  # 不设置将不能携带header 到转发的服务器
+  sensitive-headers: Cookie,Set-Cookie
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 60000
   routes:
     api: /api/**
     auth: /auth/**
-
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
