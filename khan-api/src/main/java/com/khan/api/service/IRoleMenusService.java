@@ -3,6 +3,8 @@ package com.khan.api.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.khan.api.entity.RoleMenus;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -13,4 +15,5 @@ import com.khan.api.entity.RoleMenus;
  */
 public interface IRoleMenusService extends IService<RoleMenus> {
 
+    void saveMenu(List<String> menuIds, String id);
 }

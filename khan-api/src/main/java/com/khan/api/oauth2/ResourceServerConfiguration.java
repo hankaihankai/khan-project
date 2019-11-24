@@ -32,7 +32,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 			String name = menus.getName();
 			registry.antMatchers(url).hasAnyAuthority(name);
 		});
-		registry.antMatchers("/oauth/**").permitAll();
+		registry.antMatchers("/oauth/**", "/swagger-ui.html").permitAll();
 //				.antMatchers("/main/**").hasAnyAuthority("user")
 //				.antMatchers("/**").hasAnyAuthority("user");
 
